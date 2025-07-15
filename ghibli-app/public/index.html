@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ghibli Characters</title>
+  <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+  <h1>Ghibli Characters</h1>
+
+  <form id="searchForm">
+    <input type="text" id="searchInput" placeholder="Search by name or story title">
+    <button type="submit">Search</button>
+  </form>
+
+  <div id="results"></div>
+
+  <script>
+    const form = document.getElementById('searchForm');
+    const results = document.getElementById('results');
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const q = document.getElementById('searchInput').value;
+      const res = await fetch(`/search?q=${encodeURIComponent(q)}`);
+      const data = await res.json();
+
+      results.innerHTML = data.map(c => `
+        <div class="card">
+          <img src="${c.image_url}" width="150" />
+          <h3>${c.name}</h3>
+          <p><strong>Story Title:</strong> ${c.story_title}</p>
+          <p><strong>Origin:</strong> ${c.origin}</p>
+          <p><strong>Age:</strong> ${c.age}</p>
+          <p><strong>Protagonist:</strong> ${c.is_protagonist ? 'Yes' : 'No'}</p>
+          <p><strong>Lesson:</strong> ${c.lesson}</p>
+          <p><strong>Voice Actor:</strong> ${c.voice_actor || 'Unknown'}</p>
+          <p><strong>Description:</strong> ${c.description}</p>
+        </div>
+      `).join('');
+    };
+  </script>
+</body>
+</html>

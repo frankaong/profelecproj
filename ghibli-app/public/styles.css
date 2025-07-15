@@ -1,0 +1,63 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 40px;
+  background: #f0f4f8;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #2d5c7f;
+}
+
+form {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#searchInput {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #2d5c7f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1f3e5a;
+}
+
+#results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  width: 250px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.card h3 {
+  margin-top: 12px;
+  font-size: 20px;
+  color: #1f3e5a;
+}
