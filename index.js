@@ -18,7 +18,7 @@ app.get('/search', async (req, res) => {
     res.json(result.rows);
   } catch (err) {
     console.error(err);
-    res.status(500).send("DB error");
+    res.status(500).json({ error: "DB error", details: err.message });
   }
 });
 
