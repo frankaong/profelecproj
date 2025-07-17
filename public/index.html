@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Ghibli Characters</title>
-  <link rel="stylesheet" href="styles.css"> 
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
+
 </head>
 <body>
+  
   <h1>Ghibli Characters</h1>
 
   <form id="searchForm">
@@ -12,32 +16,57 @@
     <button type="submit">Search</button>
   </form>
 
+  <div id="noResults">No results found.</div>
+
   <div id="results"></div>
 
-  <script>
-    const form = document.getElementById('searchForm');
-    const results = document.getElementById('results');
+<script>
+  const form = document.getElementById('searchForm');
+  const results = document.getElementById('results');
+  const noResults = document.getElementById('noResults'); // <- Add this line
 
-    form.onsubmit = async (e) => {
-      e.preventDefault();
-      const q = document.getElementById('searchInput').value;
-      const res = await fetch(`/search?q=${encodeURIComponent(q)}`);
-      const data = await res.json();
+  function generateSparkles(count = 4) {
+    let sparkles = '';
+    for (let i = 0; i < count; i++) {
+      const x = Math.random() * 90 + 5;
+      const y = Math.random() * 80 + 10;
+      const delay = Math.random() * 2;
+      sparkles += `<div class="sparkle" style="left:${x}%; top:${y}%; animation-delay:${delay}s;"></div>`;
+    }
+    return sparkles;
+  }
 
-      results.innerHTML = data.map(c => `
-        <div class="card">
-          <img src="${c.image_url}" width="150" />
-          <h3>${c.name}</h3>
-          <p><strong>Story Title:</strong> ${c.story_title}</p>
-          <p><strong>Origin:</strong> ${c.origin}</p>
-          <p><strong>Age:</strong> ${c.age}</p>
-          <p><strong>Protagonist:</strong> ${c.is_protagonist ? 'Yes' : 'No'}</p>
-          <p><strong>Lesson:</strong> ${c.lesson}</p>
-          <p><strong>Voice Actor:</strong> ${c.voice_actor || 'Unknown'}</p>
-          <p><strong>Description:</strong> ${c.description}</p>
-        </div>
-      `).join('');
-    };
-  </script>
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const q = document.getElementById('searchInput').value.trim();
+    const res = await fetch(`/search?q=${encodeURIComponent(q)}`);
+    const data = await res.json();
+
+    if (data.length === 0) {
+      noResults.style.display = 'block';
+    } else {
+      noResults.style.display = 'none';
+    }
+
+results.innerHTML = data.map((c, i) => `
+  <div class="card" style="animation-delay: ${i * 100}ms;">
+    ${generateSparkles(5)}
+    <img src="${c.image_url}" alt="${c.name}" />
+    <div class="card-info">
+      <h3>${c.name}</h3>
+      <p><strong>Story Title:</strong> ${c.story_title}</p>
+      <p><strong>Origin:</strong> ${c.origin}</p>
+      <p><strong>Age:</strong> ${c.age}</p>
+      <p><strong>Protagonist:</strong> ${c.is_protagonist ? 'Yes' : 'No'}</p>
+      <p><strong>Lesson:</strong> ${c.lesson}</p>
+      <p><strong>Voice Actor:</strong> ${c.voice_actor || 'Unknown'}</p>
+      <p class="description"><strong>Description:</strong> ${c.description}</p>
+    </div>
+  </div>
+`).join('');
+
+  };
+</script>
+
 </body>
 </html>

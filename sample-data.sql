@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS characters (
-  id SERIAL PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100),
   story_title VARCHAR(100),
   origin VARCHAR(100),
@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS characters (
   image_url TEXT,
   description TEXT
 );
+
 
 INSERT INTO characters (
   name, story_title, origin, lesson,
