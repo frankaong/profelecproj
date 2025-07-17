@@ -41,6 +41,11 @@
     const q = document.getElementById('searchInput').value.trim();
     const res = await fetch(`/search?q=${encodeURIComponent(q)}`);
     const data = await res.json();
+    console.log('Fetched data:', data);
+    if (!Array.isArray(data)) {
+      throw new Error('Unexpected response: ' + JSON.stringify(data));
+    }
+
 
     if (data.length === 0) {
       noResults.style.display = 'block';
